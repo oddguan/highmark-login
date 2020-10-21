@@ -1,0 +1,22 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-highmarklogin-dev-165759-authRole",
+      "UnauthRoleArn": "arn:aws:iam::983646961659:role/amplify-highmarklogin-dev-165759-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::983646961659:role/amplify-highmarklogin-dev-165759-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-highmarklogin-dev-165759-deployment",
+      "UnauthRoleName": "amplify-highmarklogin-dev-165759-unauthRole",
+      "StackName": "amplify-highmarklogin-dev-165759",
+      "StackId": "arn:aws:cloudformation:us-east-1:983646961659:stack/amplify-highmarklogin-dev-165759/1b460db0-13e0-11eb-929f-12909bffa46d",
+      "AmplifyAppId": "d2jtvpuzorbjaq"
+    },
+    "categories": {
+      "auth": {
+        "highmarklogin89556ae789556ae7": {
+          "hostedUIProviderCreds": "[]"
+        }
+      }
+    }
+  }
+}
