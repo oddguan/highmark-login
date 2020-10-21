@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import ConfirmEmailContainer from '../containers/ConfirmEmailContainer';
 
 /** Container components */
 // import DashBoardContainer from '../containers/DashboardContainer';
-// import LoginContainer from '../containers/LoginContainer';
+import LoginContainer from '../containers/LoginContainer';
 import SignUpContainer from '../containers/SignUpContainer';
-// import ConfirmEmailContainer from '../containers/ConfirmEmailContainer';
+import ConfirmEmailContainer from '../containers/ConfirmEmailContainer';
 // import ForgotPasswordContainer from '../containers/ForgotPasswordContainer';
 // import PasswordResetContainer from '../containers/PasswordResetContainer';
 
@@ -23,8 +22,8 @@ class AppRouter extends React.Component {
             path='/dashboard'
             component={DashBoardContainer}
           /> */}
-          {/* <Route exact={true} path='/' component={LoginContainer} />
-          <Route exact={true} path='/login' component={LoginContainer} /> */}
+          <Route exact={true} path='/' component={LoginContainer} />
+          <Route exact={true} path='/login' component={LoginContainer} />
           <Route exact={true} path='/signup' component={SignUpContainer} />
           <Route
             exact={true}
