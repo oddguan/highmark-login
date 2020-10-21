@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import ConfirmEmailContainer from '../containers/ConfirmEmailContainer';
 
 /** Container components */
 // import DashBoardContainer from '../containers/DashboardContainer';
@@ -25,12 +26,12 @@ class AppRouter extends React.Component {
           {/* <Route exact={true} path='/' component={LoginContainer} />
           <Route exact={true} path='/login' component={LoginContainer} /> */}
           <Route exact={true} path='/signup' component={SignUpContainer} />
-          {/* <Route
+          <Route
             exact={true}
             path='/verify-code'
             component={ConfirmEmailContainer}
           />
-          <Route
+          {/* <Route
             exact={true}
             path='/reset-password'
             component={PasswordResetContainer}
