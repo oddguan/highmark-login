@@ -53,7 +53,7 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
             urlParams.delete('redirect_url');
             urlParams.append(
               'code',
-              btoa(user.signInUserSession.accessToken.jwtToken)
+              user.signInUserSession.accessToken.jwtToken
             );
 
             console.log(user.signInUserSession);
