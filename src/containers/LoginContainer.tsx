@@ -50,12 +50,17 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
 
             const urlParams = new URLSearchParams(window.location.search);
             const redirectUrl = urlParams.get('redirect_url');
+            urlParams.delete('redirect_url');
+            urlParams.append(
+              'code',
+              user.signInUserSession.accessToken.jwtToken
+            );
 
+            console.log(user.signInUserSession);
+            console.log(user.signInUserSession.accessToken.jwtToken);
+            console.log('param tostring:', urlParams.toString());
             if (redirectUrl) {
-              window.location.href =
-              redirectUrl +
-                '?code=' +
-                user.signInUserSession.accessToken.jwtToken;
+              window.location.href = redirectUrl + "?" + urlParams.toString();
             }
           })
           .catch((err) => {
