@@ -34,7 +34,6 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
         Auth.signIn(username, password)
           .then((user) => {
             const { history } = props;
-            const from = { pathname: '/dashboard' };
 
             localStorage.setItem(
               AUTH_USER_TOKEN_KEY,
@@ -48,7 +47,10 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
               duration: 1.5,
             });
 
-            history.push(from);
+            history.push({
+              pathname:
+                'https://pitangui.amazon.com/api/skill/link/MW8026NLJVNEB',
+            });
           })
           .catch((err) => {
             notification.error({
