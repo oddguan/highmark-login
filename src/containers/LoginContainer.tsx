@@ -12,6 +12,7 @@ import { colors } from '../themes/colors';
 // App constants
 import { AUTH_USER_TOKEN_KEY } from '../utils/constants';
 import { LoadingOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
+import { CognitoUser } from 'amazon-cognito-identity-js';
 
 type Props = RouteComponentProps<any> & {
   form: any;
@@ -32,7 +33,7 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
         setLoading(true);
 
         Auth.signIn(username, password)
-          .then((user) => {
+          .then((user: any) => {
             const { history } = props;
 
             localStorage.setItem(
@@ -51,9 +52,10 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
             const redirectUrl = urlParams.get('redirect_url');
 
             if (redirectUrl) {
-              history.push({
-                pathname: redirectUrl,
-              });
+              window.location.href =
+              redirectUrl +
+                '?code=' +
+                user.signInUserSession.accessToken.jwtToken;
             }
           })
           .catch((err) => {
