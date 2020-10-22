@@ -47,10 +47,14 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
               duration: 1.5,
             });
 
-            history.push({
-              pathname:
-                'https://pitangui.amazon.com/api/skill/link/MW8026NLJVNEB',
-            });
+            const urlParams = new URLSearchParams(window.location.search);
+            const redirectUrl = urlParams.get('redirect_url');
+
+            if (redirectUrl) {
+              history.push({
+                pathname: redirectUrl,
+              });
+            }
           })
           .catch((err) => {
             notification.error({
