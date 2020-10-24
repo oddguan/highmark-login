@@ -12,7 +12,6 @@ import { colors } from '../themes/colors';
 // App constants
 import { AUTH_USER_TOKEN_KEY } from '../utils/constants';
 import { LoadingOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
-import { CognitoUser } from 'amazon-cognito-identity-js';
 
 type Props = RouteComponentProps<any> & {
   form: any;
@@ -48,20 +47,21 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
               duration: 1.5,
             });
 
-            const urlParams = new URLSearchParams(window.location.search);
-            const redirectUrl = urlParams.get('redirect_url');
-            urlParams.delete('redirect_url');
-            urlParams.append(
-              'code',
-              user.signInUserSession.accessToken.jwtToken
-            );
+            // const urlParams = new URLSearchParams(window.location.search);
+            // const redirectUrl = urlParams.get('redirect_url');
+            // urlParams.delete('redirect_url');
+            // urlParams.append(
+            //   'code',
+            //   user.signInUserSession.accessToken.jwtToken
+            // );
 
-            console.log(user.signInUserSession);
-            console.log(user.signInUserSession.accessToken.jwtToken);
-            console.log('param tostring:', urlParams.toString());
-            if (redirectUrl) {
-              window.location.href = redirectUrl + "?" + urlParams.toString();
-            }
+            // if (redirectUrl) {
+            //   window.location.href = redirectUrl + "?" + urlParams.toString();
+            // }
+
+            // if (firstLogin) // TODO: check first login here
+            history.push('/privacy-consent');
+            // else // TODO: redirect back to alexa directly
           })
           .catch((err) => {
             notification.error({

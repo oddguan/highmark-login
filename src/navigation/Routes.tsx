@@ -6,8 +6,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import LoginContainer from '../containers/LoginContainer';
 import SignUpContainer from '../containers/SignUpContainer';
 import ConfirmEmailContainer from '../containers/ConfirmEmailContainer';
-// import ForgotPasswordContainer from '../containers/ForgotPasswordContainer';
-// import PasswordResetContainer from '../containers/PasswordResetContainer';
+import PrivacyPolicyConsentContainer from '../containers/PrivacyPolicyConsentContainer';
+import PrivacyConfigContainer from '../containers/PrivacyConfigContainer';
 
 /** private route component */
 import PrivateRoute from './PrivateRoute';
@@ -17,11 +17,16 @@ class AppRouter extends React.Component {
     return (
       <Router>
         <React.Fragment>
-          {/* <PrivateRoute
-            exact={true}
-            path='/dashboard'
-            component={DashBoardContainer}
-          /> */}
+          <PrivateRoute
+            exact
+            path='/privacy-consent'
+            component={PrivacyPolicyConsentContainer}
+          />
+          <PrivateRoute
+            exact
+            path='/privacy-config'
+            component={PrivacyConfigContainer}
+            />
           <Route exact={true} path='/' component={LoginContainer} />
           <Route exact={true} path='/login' component={LoginContainer} />
           <Route exact={true} path='/signup' component={SignUpContainer} />
