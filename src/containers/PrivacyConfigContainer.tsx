@@ -105,10 +105,12 @@ const PrivacyConfigContainer: React.FC<RouteComponentProps> = ({
           console.error(err);
           return;
         }
+        const responseParams = new URLSearchParams();
         const jwtToken = session.getAccessToken().getJwtToken();
-        params.append('access_token', jwtToken);
-        params.append('code', jwtToken);
-        window.location.href = redirect + '?' + params.toString();
+        responseParams.append('access_token', jwtToken);
+        responseParams.append('state', params.get('state') || '');
+        responseParams.append('token_type', 'Bearer');
+        window.location.href = redirect + '?' + responseParams.toString();
       });
     });
   };
