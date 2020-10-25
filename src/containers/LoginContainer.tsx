@@ -61,9 +61,15 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
                       acceptedPrivacyPolicy &&
                       acceptedPrivacyPolicy.getValue() !== '0'
                     ) {
-                      history.push('/privacy-config');
+                      history.push({
+                        pathname: '/privacy-config',
+                        search: window.location.search
+                      });
                     } else {
-                      history.push('/privacy-consent');
+                      history.push({
+                        pathname: '/privacy-consent',
+                        search: window.location.search
+                      });
                     }
                   });
                 }

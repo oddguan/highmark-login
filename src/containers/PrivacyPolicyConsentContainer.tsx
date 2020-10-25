@@ -19,14 +19,17 @@ const PrivacyPolicyConsentContainer: React.FC<RouteComponentProps> = (
 
   const onAccept = async () => {
     setSubmitting(true);
-    const user = await Auth.currentAuthenticatedUser() as CognitoUser;
+    const user = (await Auth.currentAuthenticatedUser()) as CognitoUser;
     const newAttributes = [{ Name: 'custom:agreedPrivacy', Value: '1' }];
     user.updateAttributes(newAttributes, (err) => {
       console.error(err);
       return;
     });
     const { history } = props;
-    history.push('privacy-config');
+    history.push({
+      pathname: '/privacy-config',
+      search: window.location.search,
+    });
   };
 
   return (

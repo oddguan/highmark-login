@@ -1,13 +1,13 @@
 import React from 'react';
 
 import { Auth } from 'aws-amplify';
+import { CognitoUser, CognitoUserSession } from 'amazon-cognito-identity-js';
 
 import { Typography, Button } from 'antd';
 
 import CenterWrapper from '../components/styled/CenterWrapper';
 import YesNoOptionCard from '../components/YesNoOptionCard';
 import { RouteComponentProps } from 'react-router-dom';
-import { CognitoUser } from 'amazon-cognito-identity-js';
 
 export type Option = {
   name: string;
@@ -42,8 +42,41 @@ const initialOptions: Option[] = [
 
 const PrivacyConfigContainer: React.FC<RouteComponentProps> = ({ history }): React.ReactElement => {
   const [options, setOptions] = React.useState(initialOptions);
+  const [user, setUser] = React.useState<CognitoUser | null>(null);
+
+  React.useEffect(() => {
+    const checkIfConfiguredSettings = async () => {
+      const user = await Auth.currentAuthenticatedUser() as CognitoUser;
+      setUser(user);
+      user.getUserAttributes((err, attributes) => {
+        if (err || !attributes) {
+          return;
+        }
+        const alreadyConfigured = attributes.find(
+          (attr) => attr.getName() === 'custom:configuredSettings'
+        );
+        if (alreadyConfigured && alreadyConfigured.getValue() === '1') {
+          const params = new URLSearchParams(window.location.search);
+          const redirect = params.get('redirect_url') || params.get('redirect_uri');
+          user.getSession((err: Error | null, session: CognitoUserSession) => {
+            if (err) {
+              console.error(err);
+              return;
+            }
+            const jwtToken = session.getAccessToken().getJwtToken();
+            params.append('code', jwtToken);
+            window.location.href = redirect + '?' + params.toString();
+          })
+        }
+      });
+    };
+    checkIfConfiguredSettings();
+  }, [history]);
 
   const onSubmit = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    if (!user) {
+      return;
+    }
     const newOptions = [...options];
     let atLeastOneError = false;
     for (const option of newOptions) {
@@ -56,7 +89,13 @@ const PrivacyConfigContainer: React.FC<RouteComponentProps> = ({ history }): Rea
     if (atLeastOneError) {
       return;
     }
-    // TODO: go to next page
+    const attrs = [{ Name: 'custom:configuredSettings', Value: '1' }];
+    user.updateAttributes(attrs, (err) => {
+      if (err) {
+        console.error(err);
+      }
+      // TODO: go to next page
+    });
   };
 
   return (
