@@ -106,6 +106,7 @@ const PrivacyConfigContainer: React.FC<RouteComponentProps> = ({
           return;
         }
         const jwtToken = session.getAccessToken().getJwtToken();
+        params.append('access_token', jwtToken);
         params.append('code', jwtToken);
         window.location.href = redirect + '?' + params.toString();
       });
