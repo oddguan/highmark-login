@@ -72,6 +72,7 @@ const PrivacyConfigContainer: React.FC<RouteComponentProps> = (): React.ReactEle
             responseParams.append('token_type', 'Bearer');
             console.log('-------------------redirecting to:');
             console.log(redirect + '?' + responseParams.toString());
+            window.location.href = redirect + '?' + responseParams.toString();
           });
         }
       });
