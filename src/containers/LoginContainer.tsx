@@ -14,7 +14,6 @@ import { AUTH_USER_TOKEN_KEY } from '../utils/constants';
 import { LoadingOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import {
   CognitoUser,
-  CognitoUserAttribute,
   CognitoUserSession,
 } from 'amazon-cognito-identity-js';
 
@@ -57,19 +56,24 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
                       (attribute) =>
                         attribute.getName() === 'custom:agreedPrivacy'
                     );
+                    console.log('after logged in and inside callback - pushing new routes...')
                     if (
                       acceptedPrivacyPolicy &&
                       acceptedPrivacyPolicy.getValue() !== '0'
                     ) {
+                      console.log('pushing config route...');
                       history.push({
                         pathname: '/privacy-config',
                         search: window.location.search
                       });
+                      console.log('pushed config route');
                     } else {
+                      console.log('pushing consent route...');
                       history.push({
                         pathname: '/privacy-consent',
                         search: window.location.search
                       });
+                      console.log('pushed consent route');
                     }
                   });
                 }

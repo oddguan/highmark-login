@@ -17,12 +17,12 @@ class AppRouter extends React.Component {
     return (
       <Router>
         <React.Fragment>
-          <PrivateRoute
+          <Route
             exact
             path='/privacy-consent'
             component={PrivacyPolicyConsentContainer}
           />
-          <PrivateRoute
+          <Route
             exact
             path='/privacy-config'
             component={PrivacyConfigContainer}

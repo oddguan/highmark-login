@@ -10,9 +10,12 @@ const PrivateRoute = ({
   component: Component,
   ...rest
 }: any & { component: any }) => {
-  const checkUserAuth = validateToken(
-    localStorage.getItem(AUTH_USER_TOKEN_KEY)
-  );
+  React.useEffect(() => {
+    console.log('PrivateRoute componentDidMount');
+  }, []);
+
+  const jwtToken = localStorage.getItem(AUTH_USER_TOKEN_KEY);
+  const checkUserAuth = validateToken(jwtToken);
   return (
     <Route
       {...rest}
@@ -22,7 +25,7 @@ const PrivateRoute = ({
         ) : (
           <Redirect
             to={{
-              pathname: '/login',
+              pathname: '/',
             }}
           />
         );
