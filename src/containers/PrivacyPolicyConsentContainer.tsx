@@ -4,18 +4,27 @@ import { Button, Checkbox, Typography } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import CenterWrapper from '../components/styled/CenterWrapper';
 import { RouteComponentProps } from 'react-router-dom';
+import { Auth } from 'aws-amplify';
+import { CognitoUser, CognitoUserAttribute } from 'amazon-cognito-identity-js';
 
 const PrivacyPolicyConsentContainer: React.FC<RouteComponentProps> = (
   props
 ): React.ReactElement => {
-  const [submitting, isSubmitting] = React.useState(false);
+  const [submitting, setSubmitting] = React.useState(false);
   const [checked, setChecked] = React.useState(false);
 
   const onCheckboxChange = (e: CheckboxChangeEvent) => {
     setChecked(e.target.checked);
   };
 
-  const onAccept = () => {
+  const onAccept = async () => {
+    setSubmitting(true);
+    const user = await Auth.currentAuthenticatedUser() as CognitoUser;
+    const newAttributes = [{ Name: 'custom:agreedPrivacy', Value: '1' }];
+    user.updateAttributes(newAttributes, (err) => {
+      console.error(err);
+      return;
+    });
     const { history } = props;
     history.push('privacy-config');
   };

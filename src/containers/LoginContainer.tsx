@@ -12,13 +12,14 @@ import { colors } from '../themes/colors';
 // App constants
 import { AUTH_USER_TOKEN_KEY } from '../utils/constants';
 import { LoadingOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  CognitoUser,
+  CognitoUserAttribute,
+  CognitoUserSession,
+} from 'amazon-cognito-identity-js';
 
 type Props = RouteComponentProps<any> & {
   form: any;
-};
-
-type State = {
-  loading: boolean;
 };
 
 const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
@@ -32,37 +33,42 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
         setLoading(true);
 
         Auth.signIn(username, password)
-          .then((user: any) => {
+          .then((user: CognitoUser) => {
             const { history } = props;
+            user.getSession(
+              (err: Error | null, session: CognitoUserSession) => {
+                if (!err) {
+                  const jwtToken = session.getAccessToken().getJwtToken();
+                  localStorage.setItem(AUTH_USER_TOKEN_KEY, jwtToken);
 
-            localStorage.setItem(
-              AUTH_USER_TOKEN_KEY,
-              user.signInUserSession.accessToken.jwtToken
+                  notification.success({
+                    message: 'Succesfully logged in!',
+                    description:
+                      'Logged in successfully, Redirecting you in a few!',
+                    placement: 'topRight',
+                    duration: 1.5,
+                  });
+                  console.log('logged in');
+                  user.getUserAttributes((err, attributes) => {
+                    if (err || !attributes) {
+                      return;
+                    }
+                    const acceptedPrivacyPolicy = attributes.find(
+                      (attribute) =>
+                        attribute.getName() === 'custom:agreedPrivacy'
+                    );
+                    if (
+                      acceptedPrivacyPolicy &&
+                      acceptedPrivacyPolicy.getValue() !== '0'
+                    ) {
+                      history.push('/privacy-config');
+                    } else {
+                      history.push('/privacy-consent');
+                    }
+                  });
+                }
+              }
             );
-
-            notification.success({
-              message: 'Succesfully logged in!',
-              description: 'Logged in successfully, Redirecting you in a few!',
-              placement: 'topRight',
-              duration: 1.5,
-            });
-
-            // const urlParams = new URLSearchParams(window.location.search);
-            // const redirectUrl = urlParams.get('redirect_url');
-            // urlParams.delete('redirect_url');
-            // urlParams.append(
-            //   'code',
-            //   user.signInUserSession.accessToken.jwtToken
-            // );
-
-            // if (redirectUrl) {
-            //   window.location.href = redirectUrl + "?" + urlParams.toString();
-            // }
-
-            // if (firstLogin) // TODO: check first login here
-            console.log('logged in');
-            history.push('/privacy-consent');
-            // else // TODO: redirect back to alexa directly
           })
           .catch((err) => {
             notification.error({

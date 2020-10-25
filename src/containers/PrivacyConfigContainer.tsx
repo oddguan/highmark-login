@@ -1,9 +1,13 @@
 import React from 'react';
 
+import { Auth } from 'aws-amplify';
+
 import { Typography, Button } from 'antd';
 
 import CenterWrapper from '../components/styled/CenterWrapper';
 import YesNoOptionCard from '../components/YesNoOptionCard';
+import { RouteComponentProps } from 'react-router-dom';
+import { CognitoUser } from 'amazon-cognito-identity-js';
 
 export type Option = {
   name: string;
@@ -28,7 +32,7 @@ const initialOptions: Option[] = [
     error: false,
   },
   {
-    name: 'Option 3',
+    name: 'Option asdglkj salkdjg alskjg lsakjg laskdgj lasgj lsakdgjlaksgjlsakjgklsa jl',
     learnMore:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum enim explicabo vitae repellat. Fugiat ut laborum temporibus ipsam, placeat cumque est dolores deleniti, in dolorem inventore quibusdam explicabo? Impedit, nesciunt?',
     state: null,
@@ -36,7 +40,7 @@ const initialOptions: Option[] = [
   },
 ];
 
-const PrivacyConfigContainer: React.FC = (props): React.ReactElement => {
+const PrivacyConfigContainer: React.FC<RouteComponentProps> = ({ history }): React.ReactElement => {
   const [options, setOptions] = React.useState(initialOptions);
 
   const onSubmit = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
