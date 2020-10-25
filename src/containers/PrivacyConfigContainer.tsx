@@ -41,9 +41,7 @@ const initialOptions: Option[] = [
   },
 ];
 
-const PrivacyConfigContainer: React.FC<RouteComponentProps> = ({
-  history,
-}): React.ReactElement => {
+const PrivacyConfigContainer: React.FC<RouteComponentProps> = (): React.ReactElement => {
   const [options, setOptions] = React.useState(initialOptions);
   const [user, setUser] = React.useState<CognitoUser | null>(null);
 
@@ -67,15 +65,19 @@ const PrivacyConfigContainer: React.FC<RouteComponentProps> = ({
               console.error(err);
               return;
             }
+            const responseParams = new URLSearchParams();
             const jwtToken = session.getAccessToken().getJwtToken();
-            params.append('code', jwtToken);
-            window.location.href = redirect + '?' + params.toString();
+            responseParams.append('access_token', jwtToken);
+            responseParams.append('state', params.get('state') || '');
+            responseParams.append('token_type', 'Bearer');
+            console.log('-------------------redirecting to:');
+            console.log(redirect + '?' + responseParams.toString());
           });
         }
       });
     };
     checkIfConfiguredSettings();
-  }, [history]);
+  }, []);
 
   const onSubmit = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     if (!user) {
@@ -110,7 +112,9 @@ const PrivacyConfigContainer: React.FC<RouteComponentProps> = ({
         responseParams.append('access_token', jwtToken);
         responseParams.append('state', params.get('state') || '');
         responseParams.append('token_type', 'Bearer');
-        window.location.href = redirect + '?' + responseParams.toString();
+        console.log('-------------------redirecting to:');
+        console.log(redirect + '?' + responseParams.toString());
+        // window.location.href = redirect + '?' + responseParams.toString();
       });
     });
   };
