@@ -10,10 +10,11 @@ const PrivateRoute = ({
   component: Component,
   ...rest
 }: any & { component: any }) => {
+  console.log('enter private route');
   const checkUserAuth = validateToken(
     localStorage.getItem(AUTH_USER_TOKEN_KEY)
   );
-
+  console.log('checkedUserAuth: ', checkUserAuth);
   return (
     <Route
       {...rest}

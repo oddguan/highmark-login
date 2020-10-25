@@ -60,6 +60,7 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
             // }
 
             // if (firstLogin) // TODO: check first login here
+            console.log('logged in');
             history.push('/privacy-consent');
             // else // TODO: redirect back to alexa directly
           })
