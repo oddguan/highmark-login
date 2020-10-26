@@ -9,6 +9,7 @@ import { Auth } from 'aws-amplify';
 import FullWidthWrapper from '../components/styled/FullWidthWrapper';
 import EmailConfirmFormWrapper from '../components/styled/EmailConfirmFormWrapper';
 import { LoadingOutlined } from '@ant-design/icons';
+import { SIGN_IN_ROUTE } from '../utils/constants';
 
 type State = {
   loading: boolean;
@@ -162,7 +163,7 @@ const ConfirmEmailContainer: React.FC<RouteComponentProps> = (
           </Button>
         </Col>
       </EmailConfirmFormWrapper>
-      {state.redirect && <Redirect to={{ pathname: '/login' }} />}
+      {state.redirect && <Redirect to={{ pathname: SIGN_IN_ROUTE }} />}
     </FullWidthWrapper>
   );
 };

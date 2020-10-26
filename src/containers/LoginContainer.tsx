@@ -10,7 +10,7 @@ import FormWrapper from '../components/styled/FormWrapper';
 import { colors } from '../themes/colors';
 
 // App constants
-import { AUTH_USER_TOKEN_KEY } from '../utils/constants';
+import { AUTH_USER_TOKEN_KEY, PRIVACY_CONFIGURE_ROUTE, PRIVACY_POLICY_ROUTE, SIGN_UP_ROUTE } from '../utils/constants';
 import { LoadingOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import {
   CognitoUser,
@@ -47,7 +47,9 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
                     placement: 'topRight',
                     duration: 1.5,
                   });
-                  console.log('logged in');
+                  if (process.env.NODE_ENV === 'development') { // if dev, always go to policy page
+                    history.push(PRIVACY_POLICY_ROUTE);
+                  }
                   user.getUserAttributes((err, attributes) => {
                     if (err || !attributes) {
                       return;
@@ -56,24 +58,19 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
                       (attribute) =>
                         attribute.getName() === 'custom:agreedPrivacy'
                     );
-                    console.log('after logged in and inside callback - pushing new routes...')
                     if (
                       acceptedPrivacyPolicy &&
                       acceptedPrivacyPolicy.getValue() !== '0'
                     ) {
-                      console.log('pushing config route...');
                       history.push({
-                        pathname: '/privacy-config',
+                        pathname: PRIVACY_CONFIGURE_ROUTE,
                         search: window.location.search
                       });
-                      console.log('pushed config route');
                     } else {
-                      console.log('pushing consent route...');
                       history.push({
-                        pathname: '/privacy-consent',
+                        pathname: PRIVACY_POLICY_ROUTE,
                         search: window.location.search
                       });
-                      console.log('pushed consent route');
                     }
                   });
                 }
@@ -160,7 +157,7 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
               </Button>
             </Col>
             <Col lg={24}>
-              Or <Link to='/signup'>register now!</Link>
+              Or <Link to={SIGN_UP_ROUTE}>register now!</Link>
             </Col>
           </Row>
         </Form.Item>

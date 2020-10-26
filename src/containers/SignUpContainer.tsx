@@ -22,6 +22,7 @@ import FormWrapper from '../components/styled/FormWrapper';
 
 /** App theme */
 import { colors } from '../themes/colors';
+import { SIGN_IN_ROUTE } from '../utils/constants';
 
 type Props = {
   form: any;
@@ -67,41 +68,6 @@ const SignUpContainer: React.FC<Props> = (props): React.ReactElement => {
     email: '',
   });
   const [form] = Form.useForm();
-  /**
-   * @param  {string} - type
-   * @param  {string} - title
-   * @param  {string} - message
-   *
-   * @returns {void} - no value returned
-   */
-  const handleOpenNotification = (
-    type: string,
-    title: string,
-    message: string
-  ): void => {
-    switch (type) {
-      case 'success':
-        notification['success']({
-          message: title,
-          description: message,
-          placement: 'topRight',
-          duration: 1.5,
-          onClose: () => {
-            setState({ ...state, redirect: true });
-          },
-        });
-        break;
-
-      case 'error':
-        notification['error']({
-          message: title,
-          description: message,
-          placement: 'topRight',
-          duration: 1.5,
-        });
-        break;
-    }
-  };
 
   const handleFinish = () => {
     form.validateFields().then((values) => {
@@ -150,56 +116,6 @@ const SignUpContainer: React.FC<Props> = (props): React.ReactElement => {
     }).catch((err) => {
       console.error(err);
     });
-  };
-
-  const handleConfirmBlur = (event: React.FormEvent<HTMLInputElement>) => {
-    const { value } = event.currentTarget;
-
-    setState({ ...state, confirmDirty: state.confirmDirty || !!value });
-  };
-
-  const compareToFirstPassword = (
-    rule: object,
-    value: string,
-    callback: (message?: string) => void
-  ) => {
-    if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
-    } else {
-      callback();
-    }
-  };
-
-  const validateToNextPassword = (
-    rule: object,
-    value: string,
-    callback: (message?: string) => void
-  ) => {
-    const validationRulesErrors = schema.validate(value, { list: true });
-
-    if (value && state.confirmDirty) {
-      form.validateFields(['confirm']);
-    }
-    if (validationRulesErrors.length > 0) {
-      callback(formatPasswordValidateError(validationRulesErrors));
-    }
-    callback();
-  };
-
-  const formatPasswordValidateError = (errors: Array<string>) => {
-    for (let i = 0; i < errors.length; i++) {
-      if (errors[i] === 'min') {
-        return 'password length should be a at least 8 characters';
-      } else if (errors[i] === 'lowercase') {
-        return 'password should contain lowercase letters';
-      } else if (errors[i] === 'uppercase') {
-        return 'password should contain uppercase letters';
-      } else if (errors[i] === 'digits') {
-        return 'password should contain digits';
-      } else if (errors[i] === 'symbols') {
-        return 'password should contain symbols';
-      }
-    }
   };
 
   return (
@@ -294,7 +210,7 @@ const SignUpContainer: React.FC<Props> = (props): React.ReactElement => {
               </Button>
             </Col>
             <Col lg={24}>
-              Or <Link to='/login'>login to your account!</Link>
+              Or <Link to={SIGN_IN_ROUTE}>login to your account!</Link>
             </Col>
           </Row>
         </Form.Item>

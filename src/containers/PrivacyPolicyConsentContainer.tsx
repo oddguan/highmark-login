@@ -5,7 +5,10 @@ import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import CenterWrapper from '../components/styled/CenterWrapper';
 import { RouteComponentProps } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
-import { CognitoUser, CognitoUserAttribute } from 'amazon-cognito-identity-js';
+import { CognitoUser } from 'amazon-cognito-identity-js';
+
+import PrivacyPolicy from '../PrivacyPolicy';
+import { PRIVACY_CONFIGURE_ROUTE } from '../utils/constants';
 
 const PrivacyPolicyConsentContainer: React.FC<RouteComponentProps> = (
   props
@@ -27,7 +30,7 @@ const PrivacyPolicyConsentContainer: React.FC<RouteComponentProps> = (
     });
     const { history } = props;
     history.push({
-      pathname: '/privacy-config',
+      pathname: PRIVACY_CONFIGURE_ROUTE,
       search: window.location.search,
     });
   };
@@ -36,120 +39,12 @@ const PrivacyPolicyConsentContainer: React.FC<RouteComponentProps> = (
     <CenterWrapper>
       <Typography.Title level={2}>Privacy Policy</Typography.Title>
       <Typography.Paragraph>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto quia
-        eos, error praesentium perferendis maiores cumque! Molestias temporibus
-        culpa eum velit nihil atque at? Fuga totam voluptates assumenda in
-        recusandae? Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-        Doloribus reiciendis reprehenderit rem nam expedita dolor. Nemo officia
-        placeat maiores, ipsam odit quae explicabo beatae modi recusandae Lorem
-        ipsum dolor, sit amet consectetur adipisicing elit. Iusto quia eos,
-        error praesentium perferendis maiores cumque! Molestias temporibus culpa
-        eum velit nihil atque at? Fuga totam voluptates assumenda in recusandae?
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus
-        reiciendis reprehenderit rem nam expedita dolor. Nemo officia placeat
-        maiores, ipsam odit quae explicabo beatae modi recusandae reprehenderit,
-        deserunt cumque aut? eos, error praesentium perferendis maiores cumque!
-        Molestias temporibus culpa eum velit nihil atque at? Fuga totam
-        voluptates assumenda in recusandae? Lorem ipsum dolor, sit amet
-        consectetur adipisicing elit. Doloribus reiciendis reprehenderit rem nam
-        expedita dolor. Nemo officia placeat maiores, ipsam odit quae explicabo
-        beatae modi recusandae reprehenderit, deserunt cumque aut? eos, error
-        praesentium perferendis maiores cumque! Molestias temporibus culpa eum
-        velit nihil atque at? Fuga totam voluptates assumenda in recusandae?
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus
-        reiciendis reprehenderit rem nam expedita dolor. Nemo officia placeat
-        maiores, ipsam odit quae explicabo beatae modi recusandae reprehenderit,
-        deserunt cumque aut? eos, error praesentium perferendis maiores cumque!
-        Molestias temporibus culpa eum velit nihil atque at? Fuga totam
-        voluptates assumenda in recusandae? Lorem ipsum dolor, sit amet
-        consectetur adipisicing elit. Doloribus reiciendis reprehenderit rem nam
-        expedita dolor. Nemo officia placeat maiores, ipsam odit quae explicabo
-        beatae modi recusandae reprehenderit, deserunt cumque aut?
-        reprehenderit, deserunt cumque aut? Lorem ipsum dolor, sit amet
-        consectetur adipisicing elit. Iusto quia eos, error praesentium
-        perferendis maiores cumque! Molestias temporibus culpa eum velit nihil
-        atque at? Fuga totam voluptates assumenda in recusandae? Lorem ipsum
-        dolor, sit amet consectetur adipisicing elit. Doloribus reiciendis
-        reprehenderit rem nam expedita dolor. Nemo officia placeat maiores,
-        ipsam odit quae explicabo beatae modi recusandae reprehenderit, deserunt
-        cumque aut? Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-        Iusto quia eos, error praesentium perferendis maiores cumque! Molestias
-        temporibus culpa eum velit nihil atque at? Fuga totam voluptates
-        assumenda in recusandae? Lorem ipsum dolor, sit amet consectetur
-        adipisicing elit. Doloribus reiciendis reprehenderit rem nam expedita
-        dolor. Nemo officia placeat maiores, ipsam odit quae explicabo beatae
-        modi recusandae Lorem ipsum dolor, sit amet consectetur adipisicing
-        elit. Iusto quia eos, error praesentium perferendis maiores cumque!
-        Molestias temporibus culpa eum velit nihil atque at? Fuga totam
-        voluptates assumenda in recusandae? Lorem ipsum dolor, sit amet
-        consectetur adipisicing elit. Doloribus reiciendis reprehenderit rem nam
-        expedita dolor. Nemo officia placeat maiores, ipsam odit quae explicabo
-        beatae modi recusandae reprehenderit, deserunt cumque aut? eos, error
-        praesentium perferendis maiores cumque! Molestias temporibus culpa eum
-        velit nihil atque at? Fuga totam voluptates assumenda in recusandae?
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus
-        reiciendis reprehenderit rem nam expedita dolor. Nemo officia placeat
-        maiores, ipsam odit quae explicabo beatae modi recusandae reprehenderit,
-        deserunt cumque aut? eos, error praesentium perferendis maiores cumque!
-        Molestias temporibus culpa eum velit nihil atque at? Fuga totam
-        voluptates assumenda in recusandae? Lorem ipsum dolor, sit amet
-        consectetur adipisicing elit. Doloribus reiciendis reprehenderit rem nam
-        expedita dolor. Nemo officia placeat maiores, ipsam odit quae explicabo
-        beatae modi recusandae reprehenderit, deserunt cumque aut? eos, error
-        praesentium perferendis maiores cumque! Molestias temporibus culpa eum
-        velit nihil atque at? Fuga totam voluptates assumenda in recusandae?
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus
-        reiciendis reprehenderit rem nam expedita dolor. Nemo officia placeat
-        maiores, ipsam odit quae explicabo beatae modi recusandae reprehenderit,
-        deserunt cumque aut? reprehenderit, deserunt cumque aut? Lorem ipsum
-        dolor, sit amet consectetur adipisicing elit. Iusto quia eos, error
-        praesentium perferendis maiores cumque! Molestias temporibus culpa eum
-        velit nihil atque at? Fuga totam voluptates assumenda in recusandae?
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus
-        reiciendis reprehenderit rem nam expedita dolor. Nemo officia placeat
-        maiores, ipsam odit quae explicabo beatae modi recusandae reprehenderit,
-        deserunt cumque aut? Lorem ipsum dolor, sit amet consectetur adipisicing
-        elit. Iusto quia eos, error praesentium perferendis maiores cumque!
-        Molestias temporibus culpa eum velit nihil atque at? Fuga totam
-        voluptates assumenda in recusandae? Lorem ipsum dolor, sit amet
-        consectetur adipisicing elit. Doloribus reiciendis reprehenderit rem nam
-        expedita dolor. Nemo officia placeat maiores, ipsam odit quae explicabo
-        beatae modi recusandae Lorem ipsum dolor, sit amet consectetur
-        adipisicing elit. Iusto quia eos, error praesentium perferendis maiores
-        cumque! Molestias temporibus culpa eum velit nihil atque at? Fuga totam
-        voluptates assumenda in recusandae? Lorem ipsum dolor, sit amet
-        consectetur adipisicing elit. Doloribus reiciendis reprehenderit rem nam
-        expedita dolor. Nemo officia placeat maiores, ipsam odit quae explicabo
-        beatae modi recusandae reprehenderit, deserunt cumque aut? eos, error
-        praesentium perferendis maiores cumque! Molestias temporibus culpa eum
-        velit nihil atque at? Fuga totam voluptates assumenda in recusandae?
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus
-        reiciendis reprehenderit rem nam expedita dolor. Nemo officia placeat
-        maiores, ipsam odit quae explicabo beatae modi recusandae reprehenderit,
-        deserunt cumque aut? eos, error praesentium perferendis maiores cumque!
-        Molestias temporibus culpa eum velit nihil atque at? Fuga totam
-        voluptates assumenda in recusandae? Lorem ipsum dolor, sit amet
-        consectetur adipisicing elit. Doloribus reiciendis reprehenderit rem nam
-        expedita dolor. Nemo officia placeat maiores, ipsam odit quae explicabo
-        beatae modi recusandae reprehenderit, deserunt cumque aut? eos, error
-        praesentium perferendis maiores cumque! Molestias temporibus culpa eum
-        velit nihil atque at? Fuga totam voluptates assumenda in recusandae?
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus
-        reiciendis reprehenderit rem nam expedita dolor. Nemo officia placeat
-        maiores, ipsam odit quae explicabo beatae modi recusandae reprehenderit,
-        deserunt cumque aut? reprehenderit, deserunt cumque aut? Lorem ipsum
-        dolor, sit amet consectetur adipisicing elit. Iusto quia eos, error
-        praesentium perferendis maiores cumque! Molestias temporibus culpa eum
-        velit nihil atque at? Fuga totam voluptates assumenda in recusandae?
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus
-        reiciendis reprehenderit rem nam expedita dolor. Nemo officia placeat
-        maiores, ipsam odit quae explicabo beatae modi recusandae reprehenderit,
-        deserunt cumque aut?
+        {PrivacyPolicy}
       </Typography.Paragraph>
       <Checkbox checked={checked} onChange={onCheckboxChange}>
         I agree with the terms and conditions.
       </Checkbox>
-      <Button onClick={onAccept} disabled={!checked} block type='primary'>
+      <Button onClick={onAccept} disabled={!checked && submitting} block type='primary'>
         I Accept
       </Button>
     </CenterWrapper>
