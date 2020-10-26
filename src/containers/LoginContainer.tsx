@@ -49,6 +49,7 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
                   });
                   if (process.env.NODE_ENV === 'development') { // if dev, always go to policy page
                     history.push(PRIVACY_POLICY_ROUTE);
+                    return;
                   }
                   user.getUserAttributes((err, attributes) => {
                     if (err || !attributes) {

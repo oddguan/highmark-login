@@ -70,14 +70,14 @@ const PrivacyConfigContainer: React.FC<RouteComponentProps> = (): React.ReactEle
             responseParams.append('access_token', jwtToken);
             responseParams.append('state', params.get('state') || '');
             responseParams.append('token_type', 'Bearer');
-            console.log('-------------------redirecting to:');
-            console.log(redirect + '?' + responseParams.toString());
             window.location.href = redirect + '?' + responseParams.toString();
           });
         }
       });
     };
-    checkIfConfiguredSettings();
+    if (process.env.NODE_ENV !== 'development') {
+      checkIfConfiguredSettings();
+    }
   }, []);
 
   const onSubmit = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {

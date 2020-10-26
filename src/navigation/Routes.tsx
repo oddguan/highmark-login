@@ -29,7 +29,6 @@ class AppRouter extends React.Component {
             component={PrivacyConfigContainer}
             />
           <Route exact={true} path={SIGN_IN_ROUTE} component={LoginContainer} />
-          <Route exact={true} path={SIGN_IN_ROUTE} component={LoginContainer} />
           <Route exact={true} path={SIGN_UP_ROUTE} component={SignUpContainer} />
           <Route
             exact={true}
