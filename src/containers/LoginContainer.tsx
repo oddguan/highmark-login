@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
-import { Form, Spin, Input, Button, notification, Col, Row } from 'antd';
+import { Form, Spin, Image, Input, Button, notification, Col, Row } from 'antd';
 
 // Presentational
 import FormWrapper from '../components/styled/FormWrapper';
@@ -10,12 +10,14 @@ import FormWrapper from '../components/styled/FormWrapper';
 import { colors } from '../themes/colors';
 
 // App constants
-import { AUTH_USER_TOKEN_KEY, PRIVACY_CONFIGURE_ROUTE, PRIVACY_POLICY_ROUTE, SIGN_UP_ROUTE } from '../utils/constants';
-import { LoadingOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import {
-  CognitoUser,
-  CognitoUserSession,
-} from 'amazon-cognito-identity-js';
+  AUTH_USER_TOKEN_KEY,
+  PRIVACY_CONFIGURE_ROUTE,
+  PRIVACY_POLICY_ROUTE,
+  SIGN_UP_ROUTE,
+} from '../utils/constants';
+import { LoadingOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
+import { CognitoUser, CognitoUserSession } from 'amazon-cognito-identity-js';
 
 type Props = RouteComponentProps<any> & {
   form: any;
@@ -47,7 +49,8 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
                     placement: 'topRight',
                     duration: 1.5,
                   });
-                  if (process.env.NODE_ENV === 'development') { // if dev, always go to policy page
+                  if (process.env.NODE_ENV === 'development') {
+                    // if dev, always go to policy page
                     history.push(PRIVACY_POLICY_ROUTE);
                     return;
                   }
@@ -65,12 +68,12 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
                     ) {
                       history.push({
                         pathname: PRIVACY_CONFIGURE_ROUTE,
-                        search: window.location.search
+                        search: window.location.search,
                       });
                     } else {
                       history.push({
                         pathname: PRIVACY_POLICY_ROUTE,
-                        search: window.location.search
+                        search: window.location.search,
                       });
                     }
                   });
@@ -97,6 +100,16 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
   return (
     <React.Fragment>
       <FormWrapper form={form} onFinish={handleFinish} className='login-form'>
+        <div style={{ textAlign: 'center' }}>
+          <Image
+            width={200}
+            src='https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmma.prnewswire.com%2Fmedia%2F701788%2FHighmark_Health_Logo.jpg'
+          />
+          <Image
+            width={120}
+            src='https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstorage.googleapis.com%2Fmesmerizing-matrix-1380%2F1%2F2018%2F07%2Famazon-alexa-transparent-logo.png'
+          />
+        </div>
         <Form.Item
           name='username'
           label='username'
@@ -138,9 +151,8 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
                 Forgot password
               </Link>
             </Col>
-            <Col lg={24}>
               <Button
-                style={{ width: '100%' }}
+                block
                 type='primary'
                 disabled={loading}
                 htmlType='submit'
@@ -156,7 +168,6 @@ const LoginContainer: React.FC<Props> = (props): React.ReactElement => {
                   'Log in'
                 )}
               </Button>
-            </Col>
             <Col lg={24}>
               Or <Link to={SIGN_UP_ROUTE}>register now!</Link>
             </Col>
