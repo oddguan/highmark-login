@@ -28,21 +28,6 @@ type Props = {
   form: any;
 };
 
-type State = {
-  confirmDirty: boolean;
-  redirect: boolean;
-  loading: boolean;
-  email: string;
-};
-
-type UserFormData = {
-  fname: string;
-  lname: string;
-  password: string;
-  email: string;
-  phoneNumber: number;
-};
-
 const passwordValidator = require('password-validator');
 
 // create a password schema
@@ -61,12 +46,9 @@ schema
   .symbols();
 
 const SignUpContainer: React.FC<Props> = (props): React.ReactElement => {
-  const [state, setState] = React.useState({
-    confirmDirty: false,
-    redirect: false,
-    loading: false,
-    email: '',
-  });
+  const [redirect, setRedirect] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [email, setEmail] = React.useState('');
   const [form] = Form.useForm();
 
   const handleFinish = () => {
@@ -75,7 +57,7 @@ const SignUpContainer: React.FC<Props> = (props): React.ReactElement => {
       let { fname, lname, password, email, phoneNumber } = values;
 
       // show loader
-      setState({ ...state, loading: true });
+      setLoading(true);
 
       Auth.signUp({
         username: email,
@@ -94,11 +76,11 @@ const SignUpContainer: React.FC<Props> = (props): React.ReactElement => {
             placement: 'topRight',
             duration: 1.5,
             onClose: () => {
-              setState({ ...state, redirect: true });
+              setRedirect(true);
             },
           });
 
-          setState({ ...state, email });
+          setEmail(email);
         })
         .catch((err: Error) => {
           notification.error({
@@ -108,10 +90,7 @@ const SignUpContainer: React.FC<Props> = (props): React.ReactElement => {
             duration: 1.5,
           });
 
-          setState({
-            ...state,
-            loading: false,
-          });
+          setLoading(false);
         });
     }).catch((err) => {
       console.error(err);
@@ -197,10 +176,10 @@ const SignUpContainer: React.FC<Props> = (props): React.ReactElement => {
               <Button
                 style={{ width: '100%' }}
                 type='primary'
-                disabled={state.loading}
+                disabled={loading}
                 htmlType='submit'
               >
-                {state.loading ? (
+                {loading ? (
                   <Spin
                     indicator={<LoadingOutlined style={{ fontSize: 24 }} />}
                   />
@@ -215,11 +194,11 @@ const SignUpContainer: React.FC<Props> = (props): React.ReactElement => {
           </Row>
         </Form.Item>
       </FormWrapper>
-      {state.redirect && (
+      {redirect && (
         <Redirect
           to={{
             pathname: '/verify-code',
-            search: `?email=${state.email}`,
+            search: `?email=${email}`,
           }}
         />
       )}
