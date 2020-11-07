@@ -96,27 +96,19 @@ const PrivacyConfigContainer: React.FC<RouteComponentProps> = (): React.ReactEle
     if (atLeastOneError) {
       return;
     }
-    const attrs = [{ Name: 'custom:configuredSettings', Value: '1' }];
-    user.updateAttributes(attrs, (err) => {
+    user.getSession((err: Error | null, session: CognitoUserSession) => {
       if (err) {
         console.error(err);
+        return;
       }
       const params = new URLSearchParams(window.location.search);
       const redirect = params.get('redirect_url') || params.get('redirect_uri');
-      user.getSession((err: Error | null, session: CognitoUserSession) => {
-        if (err) {
-          console.error(err);
-          return;
-        }
-        const responseParams = new URLSearchParams();
-        const jwtToken = session.getAccessToken().getJwtToken();
-        responseParams.append('access_token', jwtToken);
-        responseParams.append('state', params.get('state') || '');
-        responseParams.append('token_type', 'Bearer');
-        console.log('-------------------redirecting to:');
-        console.log(redirect + '?' + responseParams.toString());
-        // window.location.href = redirect + '?' + responseParams.toString();
-      });
+      const responseParams = new URLSearchParams();
+      const jwtToken = session.getAccessToken().getJwtToken();
+      responseParams.append('access_token', jwtToken);
+      responseParams.append('state', params.get('state') || '');
+      responseParams.append('token_type', 'Bearer');
+      window.location.href = redirect + '?' + responseParams.toString();
     });
   };
 
